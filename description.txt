@@ -1,3 +1,0 @@
-Created toy docker-django project using two methods:
-1. Created django project and containerized that project
-2. Creted django project inside the docker container.
