@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 
 class ApiViewTestCase(APITestCase):
 
-    def test_url_returns_401(self): #returns 401 because we require authenication
+    def test_url_returns_401(self): #returns 401 because we require authentication
         url='/api'
         response=self.client.get(url)
         self.assertEqual(response.status_code, 401)
