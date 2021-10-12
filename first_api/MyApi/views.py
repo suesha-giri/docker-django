@@ -1,21 +1,38 @@
-from rest_framework.decorators import api_view
+
 from rest_framework.response import Response
 from .serializers import CustomersSerializer
 from .models import Customers
-from django.db.models import Count
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
-@api_view(['GET']) #decorators
-def api(request):
-    return Response("I am the API endpoint.")
+from MyApi import serializers
 
-@api_view(['GET'])
-def count(request):
-    total_customers= Customers.objects.count()
-    return Response({'The number of customers are': total_customers})
 
-@api_view(['GET'])
-def dbList(request):
-    db=Customers.objects.all()
-    serializer = CustomersSerializer(db, many='True')
-    return Response(serializer.data)
+class ApiView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+
+    def get(self, request):
+        content ={"message": "I am the endpoint"}
+
+        return Response(content)
+
+class CountView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        total_customers= Customers.objects.count()
+
+        return Response({'The number of customers are': total_customers})
+
+
+class DblistView(APIView):
+
+    def get(self, request):
+        db= Customers.objects.all()
+        serializer= CustomersSerializer(db, many='True')
+
+        return Response(serializer.data)
+
 
